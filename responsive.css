@@ -32,7 +32,11 @@
     /* --- Projects --- */
     .project-showcase {
         gap: 10rem;
-        margin-top: 6rem;
+        margin-top: 2rem;
+    }
+
+    .section-title-large {
+        margin-bottom: 3.5rem;
     }
 
     .showcase-visual {
@@ -85,7 +89,9 @@
     }
 
     .menu-overlay {
-        width: 100vw;
+        width: 100%;
+        left: 0;
+        right: 0;
     }
 
     .stagger-link {
@@ -110,6 +116,8 @@
 
     .hero-main-title {
         font-size: clamp(3rem, 15vw, 6rem);
+        max-width: 90vw;
+        margin: 0 auto;
     }
 
     .hero-sub-title {
@@ -159,11 +167,11 @@
 
     /* --- Projects --- */
     .projects {
-        padding: 6rem 0;
+        padding: 4rem 0 6rem 0;
     }
 
     .section-title-large {
-        font-size: clamp(2rem, 12vw, 4rem);
+        font-size: clamp(2rem, 10vw, 3.5rem);
         margin-bottom: 3rem;
         white-space: normal;
         overflow: visible;
@@ -178,7 +186,7 @@
 
     .project-showcase {
         gap: 6rem;
-        margin-top: 3rem;
+        margin-top: 1rem;
     }
 
     .showcase-visual {
@@ -387,7 +395,7 @@
 
     /* --- Projects --- */
     .projects {
-        padding: 4rem 0;
+        padding: 2.5rem 0 4rem 0;
     }
 
     .section-title-large {
@@ -397,7 +405,7 @@
 
     .project-showcase {
         gap: 4rem;
-        margin-top: 2rem;
+        margin-top: 1rem;
     }
 
     .showcase-visual {

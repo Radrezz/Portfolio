@@ -18,6 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     gsap.ticker.lagSmoothing(0);
 
+    // --- Parallax.js Setup ---
+    const scene = document.getElementById('scene');
+    if (scene && typeof Parallax !== 'undefined') {
+        const parallaxInstance = new Parallax(scene, {
+            relativeInput: true,
+            hoverOnly: false,
+            selector: '.layer',
+            frictionX: 0.1,
+            frictionY: 0.1,
+            scalarX: 12,
+            scalarY: 8,
+            clipRelativeInput: true
+        });
+    }
+
     // --- GSAP Setup ---
     if (typeof gsap !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
@@ -64,16 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursor) cursor.style.transform = `translate(${mouseX - 6}px, ${mouseY - 6}px)`;
         if (follower) follower.style.transform = `translate(${followerX - 20}px, ${followerY - 20}px)`;
 
-        // 2. Parallax
+        // 2. Parallax (Scroll-based only for Hero, Mouse-based for others)
         normMX += (targetNormMX - normMX) * 0.05;
         normMY += (targetNormMY - normMY) * 0.05;
         parallaxElements.forEach(el => {
             const speed = parseFloat(el.getAttribute('data-speed')) || 0;
             const scrollShift = scrollY * speed;
-            const isHeroOrBg = el.closest('.hero') || el.id === 'beams-container';
-            const mShiftX = isHeroOrBg ? normMX * (speed * 100) : 0;
-            const mShiftY = isHeroOrBg ? normMY * (speed * 50) : 0;
-            if (isHeroOrBg || el.classList.contains('section-title-large')) {
+
+            // If it's a layer handled by Parallax.js, we ONLY apply scroll shift to the parent 
+            // or handle it differently to avoid transform conflicts.
+            // For now, let's keep scroll parallax for section-title-large but skip mouse shift for Hero layers.
+            const isHero = el.closest('.hero');
+            const mShiftX = (isHero) ? 0 : normMX * (speed * 100);
+            const mShiftY = (isHero) ? 0 : normMY * (speed * 50);
+
+            if (!isHero && (el.id === 'beams-container' || el.classList.contains('section-title-large'))) {
                 el.style.transform = `translate(calc(${mShiftX}px), calc(${scrollShift + mShiftY}px))`;
             }
         });

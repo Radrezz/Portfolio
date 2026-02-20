@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raditya Dwiki Alfa Reza | Portfolio 2.0</title>
-    <meta name="description" content="A premium editorial-style portfolio with scroll-based parallax.">
+    <title>Raditya Dwiki Alfa Reza | Portfolio</title>
+    <meta name="description"
+        content="Portfolio of Raditya Dwiki Alfa Reza - Showcasing creative projects and web development.">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -57,11 +58,37 @@
 
     <main>
         <section id="home" class="hero">
-            <div class="mask-wrapper">
-                <div class="bg-text-parallax" data-speed="-0.15" style="top: 15%">ALFAREZA</div>
-                <div class="parallax-text">
-                    <h1 class="hero-main-title">PORTFOLIO</h1>
-                    <p class="hero-sub-title">Raditya Dwiki Alfa Reza</p>
+            <div id="scene" class="mask-wrapper">
+
+                <!-- Background Text: ALFAREZA -->
+                <div class="layer" data-depth="0.10">
+                    <div class="bg-text-parallax">ALFAREZA</div>
+                </div>
+
+                <!-- Mid-ground: Abstract Shapes -->
+                <div class="layer" data-depth="0.15">
+                    <div class="floating-shape shape-1"></div>
+                </div>
+
+                <!-- Main Content Layer -->
+                <div class="layer" data-depth="0.30">
+                    <div class="parallax-text">
+                        <h1 class="hero-main-title">PORTFOLIO</h1>
+                        <p class="hero-sub-title">Raditya Dwiki Alfa Reza</p>
+                    </div>
+                </div>
+
+                <!-- Foreground: Small Accent Shapes -->
+                <div class="layer" data-depth="0.45">
+                    <div class="floating-shape shape-2"></div>
+                </div>
+                <div class="layer" data-depth="0.60">
+                    <div class="floating-shape shape-3"></div>
+                </div>
+
+                <!-- Furthest Foreground: Soft Blurs -->
+                <div class="layer" data-depth="0.80">
+                    <div class="floating-circle foreground-blur"></div>
                 </div>
             </div>
             <div class="scroll-tag">Scroll to Reveal</div>
@@ -72,7 +99,7 @@
             <div class="sequence-container">
                 <canvas id="computer-canvas"></canvas>
                 <div class="sequence-copy">
-                    <h2 class="section-label" style="color: var(--peach); margin-bottom: 1rem;">01 // ABOUT ME</h2>
+                    <h2 class="section-label">ABOUT ME</h2>
                     <h2 class="sequence-title">DIGITAL ARCHITECTURE</h2>
                     <p class="sequence-desc">Bridging the gap between Art and Technology through high-performance code
                         and 3D visuals.</p>
@@ -82,7 +109,7 @@
 
         <section id="projects" class="projects">
             <div class="container">
-                <h1 class="section-title-large" data-speed="0.05">SELECTED PROJECTS</h1>
+                <h1 class="section-title-large">SELECTED PROJECTS</h1>
 
                 <div class="project-showcase">
                     <!-- Project 01 -->
@@ -196,6 +223,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
     <script src="script.js"></script>
 </body>
 
