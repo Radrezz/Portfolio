@@ -1,0 +1,1029 @@
+:root {
+    --bg-dark: #452829;
+    /* Color Hunt Palette: 452829, 57595B, E8D1C5, F3E8DF */
+    --muted-grey: #57595b;
+    --peach: #e8d1c5;
+    --off-white: #f3e8df;
+    --text-main: var(--off-white);
+    --text-muted: var(--peach);
+    --transition-slow: 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-mid: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hide default cursor only if JS is active (will be added via script) */
+.js-enabled * {
+    cursor: none !important;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.4;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Cursor */
+#custom-cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: var(--off-white);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100000;
+    /* Increased to stay above menu overlay */
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+}
+
+#cursor-follower {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--peach);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    /* Increased to stay above menu overlay */
+    transition: transform 0.15s ease-out;
+}
+
+/* Background Elements */
+#beams-container,
+#ribbons,
+#click-spark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#beams-container {
+    z-index: -2;
+    opacity: 0.2;
+}
+
+#ribbons {
+    z-index: -1;
+    opacity: 0.15;
+}
+
+/* Navigation & Cursor Stacking */
+/* Staggered Menu Navigation */
+.card-nav {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    /* Moved to corner for toggle concept */
+    z-index: 1000;
+}
+
+.menu-toggle {
+    background: rgba(243, 232, 223, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(232, 209, 197, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--off-white);
+    transition: var(--transition-mid);
+    cursor: none;
+}
+
+.hamburger {
+    width: 20px;
+    height: 2px;
+    background: var(--peach);
+    position: relative;
+    transition: 0.3s;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--peach);
+    left: 0;
+    transition: 0.3s;
+}
+
+.hamburger::before {
+    top: -6px;
+}
+
+.hamburger::after {
+    top: 6px;
+}
+
+.menu-toggle:hover {
+    background: var(--peach);
+    color: var(--bg-dark);
+}
+
+.menu-toggle:hover .hamburger,
+.menu-toggle:hover .hamburger::before,
+.menu-toggle:hover .hamburger::after {
+    background: var(--bg-dark);
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 25vw;
+    height: 100vh;
+    z-index: 10000;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    overflow: hidden;
+    /* CRITICAL: Clips the sweeping sheets */
+}
+
+/* Hide toggle when menu is active to prevent overlap */
+.menu-overlay.active~.card-nav .menu-toggle,
+body:has(.menu-overlay.active) .menu-toggle {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-overlay.active {
+    pointer-events: all;
+    visibility: visible;
+}
+
+/* Animated Sheets - Reimagined to sweep from the Toggle Button (Right) */
+.menu-sheets {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.sheet {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.sheet-1 {
+    background: var(--bg-dark);
+    transition-delay: 0s;
+    z-index: 3;
+}
+
+.sheet-2 {
+    background: var(--muted-grey);
+    transition-delay: 0.1s;
+    z-index: 2;
+}
+
+.sheet-3 {
+    background: var(--off-white);
+    transition-delay: 0.2s;
+    z-index: 1;
+}
+
+/* On Close: All sheets retreat instantly from the left */
+.menu-overlay:not(.active) .sheet {
+    transform: scaleX(0);
+    transform-origin: right;
+    transition-delay: 0s !important;
+    transition-duration: 0.4s;
+    /* Faster exit */
+}
+
+.menu-overlay.active .sheet {
+    transform: scaleX(1);
+}
+
+/* Sheets 1 & 2 sweep out to reveal the final background (Sheet 3) */
+.menu-overlay.active .sheet-1,
+.menu-overlay.active .sheet-2 {
+    animation: sweep-out 0.6s forwards cubic-bezier(0.77, 0, 0.175, 1);
+    animation-delay: 0.8s;
+}
+
+@keyframes sweep-out {
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Staggered Navigation */
+.staggered-nav {
+    position: relative;
+    z-index: 10;
+}
+
+.staggered-list {
+    list-style: none;
+    text-align: center;
+}
+
+.stagger-item {
+    overflow: hidden;
+    margin: 1.5rem 0;
+}
+
+.stagger-link {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    /* Smaller for 25vw width */
+    text-decoration: none;
+    color: var(--bg-dark);
+    font-weight: 900;
+    line-height: 1.2;
+    text-transform: uppercase;
+    /* Ensure all-caps regardless of HTML */
+    transform: translateY(110%);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    padding-left: 2rem;
+    /* Initial padding for text */
+}
+
+.stagger-link::before {
+    content: attr(data-index);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    font-family: 'Outfit', sans-serif;
+    color: var(--muted-grey);
+    opacity: 0.5;
+}
+
+.menu-overlay.active .stagger-link {
+    transform: translateY(0);
+}
+
+/* Stagger Delays - Setting manually for the 4 items */
+.menu-overlay.active .stagger-item:nth-child(1) .stagger-link {
+    transition-delay: 0.5s;
+}
+
+.menu-overlay.active .stagger-item:nth-child(2) .stagger-link {
+    transition-delay: 0.6s;
+}
+
+.menu-overlay.active .stagger-item:nth-child(3) .stagger-link {
+    transition-delay: 0.7s;
+}
+
+.menu-overlay.active .stagger-item:nth-child(4) .stagger-link {
+    transition-delay: 0.8s;
+}
+
+.stagger-link:hover {
+    color: var(--peach);
+    transform: skewX(-5deg) translateY(-5px);
+}
+
+.menu-close {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--bg-dark);
+    cursor: pointer;
+    z-index: 20;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.menu-overlay.active .menu-close {
+    opacity: 1;
+    transition-delay: 1s;
+}
+
+/* removed reveal-container */
+
+/* removed mask-inner */
+
+/* Hero Stacking */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* Changed from sticky to prevent staying under sequence */
+    overflow: hidden;
+    z-index: 10;
+}
+
+.mask-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parallax-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+.hero-main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 12vw, 10rem);
+    line-height: 1.1;
+    color: var(--off-white);
+    font-weight: 800;
+    text-align: center;
+    pointer-events: none;
+}
+
+.hero-sub-title {
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin-top: 1.5rem;
+    opacity: 0.8;
+}
+
+.bg-text-parallax {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 25vw, 20rem);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(232, 209, 197, 0.04);
+    white-space: nowrap;
+    z-index: 1;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.scroll-tag {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    opacity: 0.4;
+    animation: bounce 2s infinite;
+}
+
+/* Vertical Spacing for better Parallax feel */
+.about {
+    padding: 15rem 0 25rem 0;
+    /* Significant bottom padding for exit reveal */
+    background: transparent;
+}
+
+.reveal-mask-inner .bento-item {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(69, 40, 41, 0.08);
+    box-shadow: 0 10px 30px rgba(69, 40, 41, 0.03);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-mask-inner .bento-item:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: var(--peach);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(69, 40, 41, 0.08),
+        0 0 20px rgba(232, 209, 197, 0.3);
+}
+
+/* Specific Accent Colors for Bento Items */
+.bento-1 {
+    border-left: 4px solid var(--peach) !important;
+}
+
+.bento-2 {
+    border-top: 4px solid var(--muted-grey) !important;
+}
+
+.bento-3 {
+    border-right: 4px solid var(--bg-dark) !important;
+}
+
+.bento-4 {
+    border-bottom: 4px solid var(--peach) !important;
+}
+
+.reveal-mask-inner .bento-text,
+.reveal-mask-inner .bento-title {
+    color: var(--bg-dark);
+}
+
+.reveal-mask-inner .bento-text span {
+    color: var(--peach);
+    font-weight: 600;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 300px);
+    gap: 1.5rem;
+}
+
+.bento-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(232, 209, 197, 0.05);
+    border-radius: 30px;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: var(--transition-mid);
+}
+
+.bento-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(232, 209, 197, 0.2);
+    transform: translateY(-5px);
+}
+
+.bento-1 {
+    grid-column: span 2;
+}
+
+.bento-2 {
+    grid-column: span 2;
+}
+
+.bento-3 {
+    grid-column: span 1;
+}
+
+.bento-4 {
+    grid-column: span 3;
+}
+
+.bento-title {
+    color: var(--peach);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.bento-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--off-white);
+}
+
+.bento-text span {
+    color: var(--peach);
+    font-style: italic;
+}
+
+/* Immersive Split Showcase */
+.project-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 15rem;
+    /* Large gaps for editorial breathing room */
+    margin-top: 10rem;
+}
+
+.showcase-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.showcase-item.reverse {
+    direction: rtl;
+}
+
+.showcase-item.reverse .showcase-info {
+    direction: ltr;
+    /* Reset text direction for content */
+}
+
+.showcase-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.showcase-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bg-dark);
+    background: var(--peach);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    letter-spacing: 5px;
+    display: inline-block;
+    width: fit-content;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.showcase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.1;
+    color: var(--off-white);
+    font-weight: 700;
+}
+
+.showcase-desc {
+    font-size: 1.1rem;
+    color: var(--off-white);
+    opacity: 0.6;
+    /* Muted effect with off-white */
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.showcase-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: var(--peach);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-top: 3rem;
+    padding: 1rem 2rem;
+    border: 1px solid var(--peach);
+    border-radius: 100px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    width: fit-content;
+}
+
+.showcase-btn i {
+    font-size: 1rem;
+    transition: transform 0.4s var(--transition-mid);
+}
+
+.showcase-btn:hover {
+    background: var(--peach);
+    color: var(--bg-dark);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.showcase-btn:hover i {
+    transform: rotate(45deg);
+}
+
+.showcase-visual {
+    position: relative;
+    overflow: hidden;
+    height: 60vh;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(232, 209, 197, 0.1);
+    /* Subtle peach border */
+}
+
+.visual-inner {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.visual-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Remove absolute constraints to let scale & transform handle coverage */
+    filter: grayscale(100%) brightness(0.7);
+    transition: filter 0.8s var(--transition-mid);
+    transform: scale(1.3);
+}
+
+/* Color change now only triggers when hovering specifically over the visual container */
+.showcase-visual:hover .visual-inner img {
+    filter: grayscale(0%) brightness(1);
+}
+
+.showcase-item:hover .visual-inner img {
+    transform: scale(1.05);
+    /* Keep scale on whole item hover for smoothness */
+}
+
+/* Responsive styles moved to responsive.css */
+
+/* Works Section Refined */
+.projects {
+    padding: 12rem 0;
+    position: relative;
+    z-index: 20;
+    /* Ensure projects are above other sections but below nav */
+    background: var(--bg-dark);
+    /* Explicit background to prevent transparency issues */
+}
+
+/* Staggered Works Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    align-items: start;
+}
+
+.project-large-card {
+    height: 60vh;
+    /* Reduced height for better grid balance */
+    margin-bottom: 8rem;
+    /* Controlled gap */
+    position: relative;
+    overflow: hidden;
+    border-radius: 40px;
+    background: #000;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    width: 100%;
+}
+
+/* Staggering offsets */
+.project-large-card:nth-child(even) {
+    margin-top: 15vh;
+}
+
+.project-large-card:nth-child(3) {
+    margin-top: -10vh;
+    /* Pull up to tighten the gap */
+}
+
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .project-large-card:nth-child(even),
+    .project-large-card:nth-child(3) {
+        margin-top: 0;
+    }
+
+    .project-large-card {
+        height: 50vh;
+    }
+}
+
+.project-img-wrapper {
+    width: 100%;
+    height: 120%;
+    position: absolute;
+    top: -10%;
+    overflow: hidden;
+}
+
+.project-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(40%) brightness(0.5);
+    transition: filter 0.8s var(--transition-mid), transform 0.1s ease-out;
+}
+
+.project-large-card:hover img {
+    filter: grayscale(0%) brightness(0.8);
+}
+
+.project-content {
+    position: absolute;
+    bottom: 4rem;
+    left: 4rem;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.project-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.6rem);
+    color: var(--peach);
+    opacity: 0.2;
+    display: block;
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: var(--off-white);
+    margin-bottom: 2rem;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.view-project {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--peach);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    pointer-events: all;
+    transition: var(--transition-mid);
+}
+
+.view-project:hover {
+    color: var(--off-white);
+    gap: 2rem;
+}
+
+/* Connect Section Refined */
+.contact-container {
+    padding-top: 20rem;
+    /* Large gap from projects */
+    padding-bottom: 15rem;
+    position: relative;
+    z-index: 30;
+    background: transparent;
+}
+
+.contact-card {
+    background: #57595B;
+    /* Solid muted grey from palette, contrasts with #452829 bg */
+    border: none;
+    border-radius: 60px;
+    padding: 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+}
+
+.contact-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.contact-info p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 4rem;
+    max-width: 400px;
+}
+
+.contact-links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-link-item {
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    color: var(--off-white);
+    text-decoration: none;
+    padding: 1.8rem;
+    border: 1px solid rgba(243, 232, 223, 0.2);
+    /* Slight off-white border */
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition-mid);
+    background: rgba(0, 0, 0, 0.1);
+    /* Subtle dark inset */
+}
+
+.contact-link-item:hover {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: var(--peach);
+    padding-left: 2.5rem;
+}
+
+.contact-link-item i {
+    color: var(--peach);
+    font-size: 1.4rem;
+}
+
+.form-group {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(243, 232, 223, 0.3);
+    padding: 1.2rem 0;
+    color: var(--off-white);
+    font-size: 1.1rem;
+    outline: none;
+    transition: var(--transition-mid);
+}
+
+.form-group label {
+    position: absolute;
+    left: 0;
+    top: 1.2rem;
+    color: rgba(243, 232, 223, 0.5);
+    pointer-events: none;
+    transition: var(--transition-mid);
+}
+
+.form-group input:focus~label,
+.form-group input:not(:placeholder-shown)~label {
+    top: -1rem;
+    font-size: 0.8rem;
+    color: var(--off-white);
+}
+
+.submit-btn {
+    border: 2px solid var(--off-white);
+    background: transparent;
+    color: var(--off-white);
+    padding: 1.8rem 5rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: none;
+    transition: var(--transition-mid);
+}
+
+.submit-btn:hover {
+    background: var(--off-white);
+    color: #57595B;
+    /* Match card background */
+    border-color: var(--off-white);
+}
+
+/* Footer */
+footer {
+    padding: 5rem;
+    text-align: center;
+    border-top: 1px solid rgba(232, 209, 197, 0.05);
+    position: relative;
+    z-index: 30;
+    background: transparent;
+}
+
+/* Responsive styles moved to responsive.css */
+
+/* --- Image Sequence Section --- */
+.sequence-section {
+    position: relative;
+    width: 100%;
+    background-color: var(--bg-dark);
+    z-index: 15;
+}
+
+/* Top mask removed from section (it scrolls away). Now on the sticky container below. */
+
+.sequence-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    /* Slightly increased for smoother exit blend */
+    /* Kept the successful color blending logic */
+    background: linear-gradient(to top, var(--bg-dark) 0%, var(--bg-dark) 30%, transparent 100%);
+    z-index: 5;
+    /* Above canvas */
+    pointer-events: none;
+}
+
+.sequence-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    /* Under mask and text */
+}
+
+/* Top mask on the sticky container — stays visible throughout the entire sequence */
+.sequence-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+    background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-dark) 10%, transparent 100%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* About Section Label */
+.section-label {
+    font-size: 0.8rem;
+    letter-spacing: 12px;
+    color: var(--peach);
+    opacity: 0;
+    transform: translateY(30px);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+#computer-canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    /* Increased opacity for more natural look */
+    /* Subtle filter: less sepia, less dramatic hue shift */
+    filter: sepia(0.2) hue-rotate(-10deg) saturate(1.1) brightness(0.95) contrast(1.05);
+    transition: opacity 0.5s ease;
+}
+
+.sequence-copy {
+    position: absolute;
+    bottom: 25%;
+    left: 5%;
+    max-width: 600px;
+    z-index: 20;
+    pointer-events: none;
+    /* Glassmorphism plate removed as requested */
+    background: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+}
+
+.sequence-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    color: var(--off-white);
+    margin-bottom: 1.5rem;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    /* Strengthened shadow for readability without background plate */
+    text-shadow: 0 5px 25px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.sequence-desc {
+    color: var(--peach);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    line-height: 1.6;
+    font-weight: 400;
+    /* Strengthened shadow for readability without background plate */
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+}
+
+/* Responsive styles moved to responsive.css */

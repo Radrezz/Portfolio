@@ -1,0 +1,475 @@
+/* =============================================
+   RESPONSIVE.CSS
+   Covers: 1024px | 768px | 480px | 375px
+   ============================================= */
+
+
+/* ====================================================
+   1. TABLET LANDSCAPE — max-width: 1024px
+   ==================================================== */
+@media (max-width: 1024px) {
+
+    /* --- Container --- */
+    .container {
+        padding: 0 3rem;
+    }
+
+    /* --- Navigation --- */
+    .menu-overlay {
+        width: 50vw;
+    }
+
+    .stagger-link {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        padding-left: 2rem;
+    }
+
+    /* --- Hero --- */
+    .hero-main-title {
+        font-size: clamp(3.5rem, 10vw, 8rem);
+    }
+
+    /* --- Projects --- */
+    .project-showcase {
+        gap: 10rem;
+        margin-top: 6rem;
+    }
+
+    .showcase-visual {
+        height: 50vh;
+    }
+
+    .showcase-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+    }
+
+    /* --- About Sequence --- */
+    .sequence-title {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    /* --- Contact --- */
+    .contact-card {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        padding: 4rem;
+        border-radius: 40px;
+    }
+
+    .contact-container {
+        padding-top: 12rem;
+        padding-bottom: 10rem;
+    }
+}
+
+
+/* ====================================================
+   2. TABLET PORTRAIT & LARGE MOBILE — max-width: 768px
+   ==================================================== */
+@media (max-width: 768px) {
+
+    /* --- Container --- */
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    /* --- Navigation --- */
+    .card-nav {
+        top: 1.2rem;
+        right: 1.2rem;
+    }
+
+    .menu-toggle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .menu-overlay {
+        width: 100vw;
+    }
+
+    .stagger-link {
+        font-size: clamp(2.8rem, 13vw, 4.5rem);
+        padding-left: 0;
+    }
+
+    .stagger-link::before {
+        display: none;
+    }
+
+    .menu-close {
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    /* --- Hero --- */
+    .hero {
+        min-height: 100svh;
+    }
+
+    .hero-main-title {
+        font-size: clamp(3rem, 15vw, 6rem);
+    }
+
+    .hero-sub-title {
+        font-size: 0.65rem;
+        letter-spacing: 4px;
+        text-align: center;
+        max-width: 85vw;
+    }
+
+    .scroll-tag {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+        bottom: 1.5rem;
+    }
+
+    /* --- About / Sequence --- */
+    .sequence-copy {
+        left: 5%;
+        right: 5%;
+        bottom: 28%;
+        /* Moved up */
+        max-width: 100%;
+    }
+
+    .sequence-section::after {
+        height: 40vh;
+    }
+
+    .sequence-container::before {
+        height: 12vh;
+    }
+
+    .section-label {
+        font-size: 0.65rem;
+        letter-spacing: 6px;
+        margin-bottom: 1rem;
+    }
+
+    .sequence-title {
+        font-size: clamp(1.8rem, 9vw, 3.5rem);
+    }
+
+    .sequence-desc {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* --- Projects --- */
+    .projects {
+        padding: 6rem 0;
+    }
+
+    .section-title-large {
+        font-size: clamp(2rem, 12vw, 4rem);
+        margin-bottom: 3rem;
+        white-space: normal;
+        overflow: visible;
+    }
+
+    .showcase-item,
+    .showcase-item.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 2rem;
+    }
+
+    .project-showcase {
+        gap: 6rem;
+        margin-top: 3rem;
+    }
+
+    .showcase-visual {
+        height: 45vw;
+        min-height: 220px;
+    }
+
+    .showcase-title {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+    }
+
+    .showcase-desc {
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+
+    .showcase-btn {
+        font-size: 0.75rem;
+        padding: 0.9rem 1.8rem;
+        letter-spacing: 2px;
+        margin-top: 1.5rem;
+    }
+
+    /* --- Contact --- */
+    .contact-container {
+        padding-top: 7rem;
+        padding-bottom: 5rem;
+    }
+
+    .contact-card {
+        padding: 2.5rem 2rem;
+        border-radius: 28px;
+        gap: 3rem;
+    }
+
+    .contact-info h2 {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    .contact-links-grid {
+        gap: 1rem;
+    }
+
+    .contact-link-item {
+        padding: 1.2rem;
+        font-size: 0.85rem;
+        border-radius: 18px;
+    }
+
+    .contact-link-item:hover {
+        padding-left: 1.6rem;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 1rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1.4rem 2rem;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        border-radius: 60px;
+    }
+
+    /* --- Footer --- */
+    footer {
+        padding: 3rem 1.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+
+/* ====================================================
+   3. SMALL MOBILE — max-width: 480px
+   ==================================================== */
+@media (max-width: 480px) {
+
+    /* --- Navigation --- */
+    .menu-toggle {
+        width: 46px;
+        height: 46px;
+    }
+
+    .stagger-link {
+        font-size: clamp(2.5rem, 14vw, 4rem);
+    }
+
+    /* Hero */
+    .hero-main-title {
+        font-size: clamp(2.5rem, 16vw, 4.5rem);
+    }
+
+    /* --- About Sequence --- */
+    .sequence-copy {
+        bottom: 15%;
+    }
+
+    .sequence-title {
+        font-size: clamp(1.6rem, 10vw, 3rem);
+    }
+
+    /* Projects */
+    .showcase-visual {
+        height: 55vw;
+    }
+
+    /* Contact */
+    .contact-card {
+        padding: 2rem 1.5rem;
+        border-radius: 24px;
+    }
+}
+
+
+/* ====================================================
+   4. EXTRA SMALL — max-width: 375px (iPhone SE etc.)
+   ==================================================== */
+@media (max-width: 375px) {
+
+    /* --- Container --- */
+    .container {
+        padding: 0 1.2rem;
+    }
+
+    /* --- Navigation --- */
+    .card-nav {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+    }
+
+    .hamburger {
+        width: 16px;
+    }
+
+    .stagger-link {
+        font-size: clamp(2.2rem, 15vw, 3.5rem);
+    }
+
+    /* --- Hero --- */
+    .hero-main-title {
+        font-size: clamp(2.2rem, 18vw, 3.5rem);
+    }
+
+    .hero-sub-title {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+    }
+
+    .bg-text-parallax {
+        display: none;
+        /* Hide decorative bg text on smallest screens */
+    }
+
+    .scroll-tag {
+        display: none;
+    }
+
+    /* --- About Sequence --- */
+    .sequence-copy {
+        bottom: 30%;
+        /* Moved up on small screens */
+        left: 4%;
+        right: 4%;
+    }
+
+    .section-label {
+        font-size: 0.6rem;
+        letter-spacing: 4px;
+        margin-bottom: 0.8rem;
+    }
+
+    .sequence-title {
+        font-size: clamp(1.5rem, 12vw, 2.5rem);
+        margin-bottom: 1rem;
+    }
+
+    .sequence-desc {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .sequence-section::after {
+        height: 35vh;
+    }
+
+    .sequence-container::before {
+        height: 10vh;
+    }
+
+    /* --- Projects --- */
+    .projects {
+        padding: 4rem 0;
+    }
+
+    .section-title-large {
+        font-size: clamp(1.8rem, 13vw, 3rem);
+        margin-bottom: 2rem;
+    }
+
+    .project-showcase {
+        gap: 4rem;
+        margin-top: 2rem;
+    }
+
+    .showcase-visual {
+        height: 55vw;
+        border-radius: 14px;
+        min-height: 180px;
+    }
+
+    .showcase-num {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+        letter-spacing: 3px;
+        margin-bottom: 0.5rem;
+    }
+
+    .showcase-title {
+        font-size: clamp(1.6rem, 10vw, 2.5rem);
+    }
+
+    .showcase-desc {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .showcase-btn {
+        font-size: 0.7rem;
+        padding: 0.8rem 1.4rem;
+        gap: 0.8rem;
+        letter-spacing: 1.5px;
+        margin-top: 1rem;
+    }
+
+    /* --- Contact --- */
+    .contact-container {
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+    }
+
+    .contact-card {
+        padding: 1.8rem 1.2rem;
+        border-radius: 20px;
+        gap: 2.5rem;
+    }
+
+    .contact-info h2 {
+        font-size: clamp(1.7rem, 10vw, 2.5rem);
+    }
+
+    .contact-info p {
+        font-size: 0.85rem;
+    }
+
+    .contact-link-item {
+        padding: 1rem;
+        border-radius: 14px;
+        font-size: 0.8rem;
+    }
+
+    .contact-link-item i {
+        font-size: 1rem;
+    }
+
+    .submit-btn {
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+        padding: 1.2rem;
+        border-radius: 50px;
+    }
+
+    /* --- Footer --- */
+    footer {
+        padding: 2.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}

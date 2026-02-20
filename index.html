@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raditya Dwiki Alfa Reza | Portfolio 2.0</title>
+    <meta name="description" content="A premium editorial-style portfolio with scroll-based parallax.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+    <canvas id="click-spark"></canvas>
+    <canvas id="ribbons"></canvas>
+    <div id="beams-container"></div>
+
+    <header class="card-nav">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+            <span class="hamburger"></span>
+        </button>
+    </header>
+
+    <div class="menu-overlay" id="menu-overlay">
+        <div class="menu-sheets">
+            <div class="sheet sheet-1"></div>
+            <div class="sheet sheet-2"></div>
+            <div class="sheet sheet-3"></div>
+        </div>
+        <nav class="staggered-nav">
+            <ul class="staggered-list">
+                <li class="stagger-item"><a href="#home" class="stagger-link" data-index="01">HOME</a></li>
+                <li class="stagger-item"><a href="#about" class="stagger-link" data-index="02">ABOUT</a></li>
+                <li class="stagger-item"><a href="#projects" class="stagger-link" data-index="03">PROJECT</a></li>
+                <li class="stagger-item"><a href="#contact" class="stagger-link" data-index="04">CONTACT</a></li>
+            </ul>
+        </nav>
+        <button class="menu-close" id="menu-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="mask-wrapper">
+                <div class="bg-text-parallax" data-speed="-0.15" style="top: 15%">ALFAREZA</div>
+                <div class="parallax-text">
+                    <h1 class="hero-main-title">PORTFOLIO</h1>
+                    <p class="hero-sub-title">Raditya Dwiki Alfa Reza</p>
+                </div>
+            </div>
+            <div class="scroll-tag">Scroll to Reveal</div>
+        </section>
+
+        <!-- About Section (Image Sequence Concept) -->
+        <section id="about" class="sequence-section">
+            <div class="sequence-container">
+                <canvas id="computer-canvas"></canvas>
+                <div class="sequence-copy">
+                    <h2 class="section-label" style="color: var(--peach); margin-bottom: 1rem;">01 // ABOUT ME</h2>
+                    <h2 class="sequence-title">DIGITAL ARCHITECTURE</h2>
+                    <p class="sequence-desc">Bridging the gap between Art and Technology through high-performance code
+                        and 3D visuals.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h1 class="section-title-large" data-speed="0.05">SELECTED PROJECTS</h1>
+
+                <div class="project-showcase">
+                    <!-- Project 01 -->
+                    <div class="showcase-item" data-speed="0.05">
+                        <div class="showcase-info">
+                            <span class="showcase-num">01</span>
+                            <h2 class="showcase-title">FretNotes</h2>
+                            <p class="showcase-desc">A premium platform dedicated to musical precision and digital
+                                interaction.</p>
+                            <a href="https://fretnotes.page.gd" target="_blank" class="showcase-btn">
+                                <span>VIEW PROJECT</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                        <div class="showcase-visual">
+                            <div class="visual-inner magnetic-target">
+                                <img src="ProjectAssets/project1-FretNotes.png" alt="FretNotes" class="parallax-img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 02 -->
+                    <div class="showcase-item reverse" data-speed="0.05">
+                        <div class="showcase-info">
+                            <span class="showcase-num">02</span>
+                            <h2 class="showcase-title">Clothing <br>Distro</h2>
+                            <p class="showcase-desc">High-end e-commerce experience with a focus on minimalist
+                                aesthetics.</p>
+                            <a href="https://clothingdistro.page.gd" target="_blank" class="showcase-btn">
+                                <span>VIEW PROJECT</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                        <div class="showcase-visual">
+                            <div class="visual-inner magnetic-target">
+                                <img src="ProjectAssets/project2-ClothingDistro.png" alt="Clothing Distro"
+                                    class="parallax-img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 03 -->
+                    <div class="showcase-item" data-speed="0.05">
+                        <div class="showcase-info">
+                            <span class="showcase-num">03</span>
+                            <h2 class="showcase-title">Interactive <br>Birthday</h2>
+                            <p class="showcase-desc">A celebration of motion and digital storytelling through immersive
+                                web design.</p>
+                            <a href="https://profilebirthday-template.vercel.app" target="_blank" class="showcase-btn">
+                                <span>VIEW PROJECT</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                        <div class="showcase-visual">
+                            <div class="visual-inner magnetic-target">
+                                <img src="ProjectAssets/project3-profileBirthday.png" alt="Profile Birthday"
+                                    class="parallax-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-container">
+            <div class="container">
+                <div class="contact-card">
+                    <div class="contact-info">
+                        <h2>BE BOLD. <br>BE CONNECTED.</h2>
+                        <p>Currently open for new visual projects and creative collaborations worldwide.</p>
+                        <div class="contact-links-grid">
+                            <a href="https://instagram.com/artudiei" target="_blank" class="contact-link-item">
+                                <span>Instagram</span>
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/62895337858815" target="_blank" class="contact-link-item">
+                                <span>WhatsApp</span>
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="mailto:rezaradit03@gmail.com" class="contact-link-item">
+                                <span>Email Me</span>
+                                <i class="far fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <form id="contact-form" class="contact-form" action="https://formspree.io/f/xlezreao" method="POST">
+                        <div class="form-group">
+                            <input type="text" name="name" id="name" placeholder=" " required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" placeholder=" " required>
+                            <label for="email">Process</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" id="message" placeholder=" " required></textarea>
+                            <label for="message">Your Vision</label>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submit-btn">SEND MESSAGE</button>
+                        <div id="form-status" style="margin-top: 1rem;"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Raditya Dwiki Alfa Reza. Crafted with Vanilla Magic.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
